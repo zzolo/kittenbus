@@ -7,13 +7,40 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
+
     <link rel="stylesheet" href="bower_components/normalize-css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/kittenbus.css">
   </head>
   <body>
 
+    <div class="loading">
+      <div>Loading ...</div>
+    </div>
+
+    <div class="svg-container">
+      <svg class="svg-canvas" preserveAspectRatio="xMidYMid" viewBox="0 0 1600 900">
+        <g class="time-group">
+
+        </g>
+
+        <g class="line-group">
+
+        </g>
+
+        <g class="map-group">
+
+        </g>
+      </svg>
+    </div>
 
     <script src="bower_components/d3/d3.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+
+    <script src="js/furball.js"></script>
+    <script src="js/kittenbus.js"></script>
   </body>
 </html>

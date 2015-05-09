@@ -1,0 +1,43 @@
+/* Main CSS */
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  background-color: rgba(10, 10, 10, 0.7);
+  color: #FFFFFF;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1em;
+}
+
+.loading div {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.svg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.svg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
