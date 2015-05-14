@@ -1,3 +1,5 @@
+kiosk/stele
+
 data/original/*
 !data/build/*
 !build
