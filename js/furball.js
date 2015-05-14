@@ -59,9 +59,10 @@
         t = t.replace('/Date(', '').replace(')/', '').split('-');
         d.time = moment.unix(parseInt(t[0], 10) / 1000);
 
-        // Get time difference
+        // Get time difference.  Use floor so that we are little safer with
+        // our times.
         d.seconds = d.time.diff(moment(), 'seconds');
-        d.minutes = d.seconds / 60;
+        d.minutes = Math.floor(d.seconds / 60);
 
         // Create a bus ID
         d.busID = d.Route + d.Terminal;

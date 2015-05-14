@@ -21,7 +21,9 @@
     </div>
 
     <div class="coming-soon">
-      <div><em>Untitled bus visualization</em> coming soon!  For now, here's the estimated or scheduled arrival times for the buses at this stop.</div>
+      <span><em>Untitled bus visualization</em> coming soon!  For now, here's the estimated or scheduled arrival times for the buses at this stop.</span>
+
+      <img class="svg-bear" src="images/bear-front.svg">
     </div>
 
     <div class="time-listing-container">
@@ -48,7 +50,7 @@
         <span class="time-value-bus"><%= d.busID %></span>
         <span class="time-value-desc"><%= d.Description %></span>
         <span class="time-value-min">
-          <%= (d.minutes < 2) ? 'Due' : Math.round(d.minutes) + ' min' %>
+          <%= (d.minutes < 3) ? 'Due' : d.minutes + ' min' %>
           <% if (!d.Actual) { %>
             <i class="fa fa-clock-o"></i>
           <% } %>
