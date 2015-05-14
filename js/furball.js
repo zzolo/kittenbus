@@ -54,12 +54,22 @@
     parse: function(data) {
       return _.sortBy(_.map(data, function(d) {
         var t = d.DepartureTime;
+
+        // Parse actual time to arrival
         t = t.replace('/Date(', '').replace(')/', '').split('-');
         d.time = moment.unix(parseInt(t[0], 10) / 1000);
+
+        // Get time difference
+        d.seconds = d.time.diff(moment(), 'seconds');
+        d.minutes = d.seconds / 60;
+
+        // Create a bus ID
+        d.busID = d.Route + d.Terminal;
 
         return d;
       }),
 
+      // Sort by time
       function(d) {
         return d.time.unix();
       });

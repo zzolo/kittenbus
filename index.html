@@ -9,6 +9,8 @@
 
     <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="bower_components/normalize-css/normalize.css">
     <link rel="stylesheet" href="css/kittenbus.css">
   </head>
@@ -18,21 +20,41 @@
       <div>Loading ...</div>
     </div>
 
+    <div class="coming-soon">
+      <div><em>Untitled bus visualization</em> coming soon!  For now, here's the estimated or scheduled arrival times for the buses at this stop.</div>
+    </div>
+
+    <div class="time-listing-container">
+      <div class="time-listing">
+
+      </div>
+    </div>
+
     <div class="svg-container">
       <svg class="svg-canvas" preserveAspectRatio="xMidYMid" viewBox="0 0 1600 900">
-        <g class="time-group">
-
+        <g class="map-group">
         </g>
 
         <g class="line-group">
 
         </g>
-
-        <g class="map-group">
-
-        </g>
       </svg>
     </div>
+
+
+    <!-- Templates -->
+    <script type="text/template" id="time-listing-value-template">
+      <div class="<%= (d.Actual) ? 'actual' : '' %>">
+        <span class="time-value-bus"><%= d.busID %></span>
+        <span class="time-value-desc"><%= d.Description %></span>
+        <span class="time-value-min">
+          <%= (d.minutes < 2) ? 'Due' : Math.round(d.minutes) + ' min' %>
+          <% if (!d.Actual) { %>
+            <i class="fa fa-clock-o"></i>
+          <% } %>
+        </span>
+      </div>
+    </script>
 
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
