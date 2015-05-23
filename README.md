@@ -4,19 +4,21 @@
 
 ## Installation
 
-These instructions are intended for a Mac.
+We want to have this project be in a "kiosk".  These instructions are intended for a Mac.
 
 1. System configuration
     * Create a new user
     * Setup that user to login automatically on startup
     * (...)
     * Login/restart as your new user.
-1. Get code: ``
+1. If you are using an external display, like a TV or projector.
+    * Go to Display Preferences.  Arrange it so the external display, where the project will be displayed on, is to the left of the main display.
+1. Get code: `git clone https://github.com/zzolo/kittenbus.git && cd kittenbus`
 1. Install dependencies:
     * `brew install chromedriver node`
     * `pip install selenium`
     * `npm install http-server forever -g`
-1. Install Stele
+1. Install [Stele](https://github.com/scimusmn/stele).  The placement of Stele matters.
     * Get code: `mkdir kiosk && git clone https://github.com/scimusmn/stele.git kiosk/stele`
     * Link configuration: `ln -s ../../browser.cfg kiosk/stele/cfg/browser.cfg`
 * Install [Slate](https://github.com/jigish/slate#installing-slate)
@@ -27,8 +29,7 @@ These instructions are intended for a Mac.
     * Go to System Preferences > Users
     * Select the Login Items for your User
     * Add the `kiosk/start.command`
-    * Add Slate
-
+    * Add Slate (this is also an option in the application itself)
 
 ## Notes
 
