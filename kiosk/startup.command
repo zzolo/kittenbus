@@ -4,6 +4,7 @@
 # to run on startup.
 
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
+echo "Go to project: $SCRIPT_DIR";
 cd $SCRIPT_DIR;
 
 # Run server
