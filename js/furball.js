@@ -8,7 +8,8 @@
     this.options = _.extend({}, {
       interval: 30000,
       stop: '17946',
-      stopURL: 'http://svc.metrotransit.org/NexTrip/[[[BUSSTOP]]]?format=json&callback=?'
+      stopURL: 'http://svc.metrotransit.org/NexTrip/[[[BUSSTOP]]]?format=json&callback=?',
+      timeout: 2
     }, options || {});
   };
 
@@ -18,12 +19,19 @@
     start: function() {
       this.intervalID = w.setInterval(_.bind(this.request, this), this.options.interval);
       this.request();
+
+      // Start timeout check
+      this.timeoutReset();
     },
 
     // Stop polling
     stop: function() {
       if (this.intervalID) {
         w.clearInterval(this.intervalID);
+      }
+
+      if (this.timeoutID) {
+        w.clearInterval(this.timeoutID);
       }
     },
 
@@ -38,14 +46,18 @@
         type: 'GET',
         dataType: 'jsonp',
         success: function(data) {
-          _this.trigger('stop', {
+          // Restart timeout check
+          _this.timeoutReset();
+
+          // Send data
+          _this.trigger('data', {
             stop: stop,
             data: _this.parse(data)
           });
         },
 
         error: function() {
-          // TODO: handle error
+          _this.trigger('error', arguments);
         }
       });
     },
@@ -74,6 +86,23 @@
       function(d) {
         return d.time.unix();
       });
+    },
+
+    // Timeout reached
+    timeoutReached: function() {
+      this.timeoutError = true;
+      this.trigger('timeout');
+    },
+
+    // Timeout reset.
+    timeoutReset: function() {
+      this.timeoutError = false;
+
+      if (this.timeoutID) {
+        w.clearInterval(this.timeoutID);
+      }
+
+      this.timeoutID = w.setTimeout(_.bind(this.timeoutReached, this), this.options.timeout * 60 * 1000);
     }
   });
 

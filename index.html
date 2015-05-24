@@ -16,22 +16,21 @@
   </head>
   <body>
 
-    <div class="loading">
-      <div>Loading ...</div>
-    </div>
+    <div class="kittenbus">
+      <div class="full-message">
+        <div class="full-message-content">Loading ...</div>
+      </div>
 
-    <div class="time-listing-container">
-      <div class="time-listing">
+      <div class="times-container">
+        <div class="times"></div>
+      </div>
 
+      <div class="map-container">
       </div>
     </div>
 
-    <div class="svg-container">
-    </div>
-
-
     <!-- Templates -->
-    <script type="text/template" id="time-listing-value-template">
+    <script type="text/template" id="times-item-template">
       <div class="<%= (d.Actual) ? 'actual' : '' %>">
         <span class="time-value-bus"><%= d.busID %></span>
         <span class="time-value-desc"><%= d.Description %></span>
