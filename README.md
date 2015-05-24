@@ -25,6 +25,8 @@ We want to have this project be in a "kiosk".  These instructions are intended f
     * Turn on the Accessibility API.
     * `cd /Applications && curl http://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz; cd -;`
     * Link configuration: `ln -s $(pwd)/kiosk/.slate ~/.slate`
+1. Install cron file which is mainly used to restart each night.
+    * `crontab kiosk/kittenbus.cron`
 1. Run on startup
     * Go to System Preferences > Users
     * Select the Login Items for your User
@@ -34,3 +36,9 @@ We want to have this project be in a "kiosk".  These instructions are intended f
 ## Notes
 
 * [Chrome flags](http://peter.sh/experiments/chromium-command-line-switches/?date=2015-05-14)
+
+## Licensing
+
+* Transit map, copyright Kyril Negoda.  No use without permission.
+* Animals logos, copyright Juxtaposition Arts apprenticies.  No use without permission.
+* Other code, copyright Alan Palazzolo and contributors.  Licensed under MIT license.
