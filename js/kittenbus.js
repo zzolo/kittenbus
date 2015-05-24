@@ -49,22 +49,39 @@ $(document).ready(function() {
   });
 
   // Ready
-  function ready(error, data) {
-    // Remove loader
-    $loading.fadeOut('fast');
+  function ready(error, routes, map) {
+    // Import map
+    var $svgContainer = $('.svg-container');
+    $svgContainer.append(map.documentElement);
 
     // Start fullball
     furball.start();
+
+    // Remove loader
+    $loading.fadeOut('fast');
   }
 
   // Get data
   function getData(done) {
+    // Routes
     $.ajax({
       url: 'data/build/routes.geo.json',
       type: 'GET',
       dataType: 'json',
-      success: function(data) {
-        done(null, data);
+      success: function(routes) {
+        // Map
+        $.ajax({
+          url: 'images/system-map.svg',
+          type: 'GET',
+          dataType: 'xml',
+          success: function(map) {
+            done(null, routes, map);
+          },
+
+          error: function() {
+            done(arguments, null);
+          }
+        });
       },
 
       error: function() {

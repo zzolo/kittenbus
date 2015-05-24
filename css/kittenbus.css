@@ -18,6 +18,14 @@ body {
   font-size: 1em;
 }
 
+.loading div {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
 .coming-soon {
   position: absolute;
   top: 0;
@@ -39,14 +47,6 @@ body {
   vertical-align: middle;
 }
 
-.loading div {
-  position: absolute;
-  top: 45%;
-  left: 0;
-  right: 0;
-  width: 100%;
-}
-
 .svg-container {
   position: absolute;
   top: 0;
@@ -66,40 +66,38 @@ body {
 .time-listing-container {
   position: absolute;
   top: 0;
-  margin-top: 4em;
-  width: 100%;
+  right: 0;
+  margin: 0.5em 0.5em 0 0;
+  width: 33.3333333%;
   z-index: 10;
-  font-size: 2em;
-}
-
-.time-listing {
-  max-width: 30em;
-  margin: 0 auto;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
 }
 
 .time-value {
   margin-bottom: 0.25em;
-  padding: 0.25em;
+  padding: 0.25em 0.5em;
 }
 
-.time-listing .time-value:nth-child(odd) {
-  background-color: #EBEBEB;
+.time-listing .time-value:nth-child(even) {
+  background-color: rgba(240, 240, 240, 0.8);
 }
 
 .time-value-bus {
   display: inline-block;
-  min-width: 5em;
+  min-width: 10%;
 }
 
 .time-value-desc {
   display: inline-block;
-  min-width: 20em;
+  min-width: 70%;
   color: #454545;
 }
 
 .time-value-time {
   display: inline-block;
-  min-width: 5em;
+  min-width: 20%;
 }
 
 .time-value .fa-clock-o {
