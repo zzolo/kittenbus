@@ -9,6 +9,10 @@ body  input[type="search"] {
   box-sizing: border-box;
 }
 
+.hide {
+  display: none;
+}
+
 .kittenbus {
   position: absolute;
   top: 0;
@@ -39,6 +43,17 @@ body  input[type="search"] {
   width: 100%;
   padding: 0 10%;
   line-height: 1.25em;
+}
+
+.note {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1em;
+  text-align: center;
 }
 
 .map-container {
