@@ -1,5 +1,7 @@
 kiosk/stele
 
+!bower_components
+
 data/original/*
 !data/build/*
 !build
@@ -7,7 +9,7 @@ data/original/*
 # General git ignores
 node_modules/
 components/
-bower_components/
+#bower_components/
 .sass-cache
 .tmp
 tmp/
