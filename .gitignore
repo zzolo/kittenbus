@@ -1,10 +1,11 @@
 kiosk/stele
 
-!bower_components
-
 data/original/*
 !data/build/*
 !build
+
+!bower_components
+!bower_components/**/dist/*
 
 # General git ignores
 node_modules/
