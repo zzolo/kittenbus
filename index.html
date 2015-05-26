@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="bower_components/normalize-css/normalize.css">
+    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
     <link rel="stylesheet" href="css/kittenbus.css">
   </head>
   <body>
@@ -29,13 +30,16 @@
         <div class="times"></div>
       </div>
 
-      <div class="map-container">
+      <div id="map-container">
       </div>
     </div>
 
     <!-- Templates -->
     <script type="text/template" id="times-item-template">
       <div class="<%= (d.Actual) ? 'actual' : '' %>">
+        <span class="time-value-icon">
+          <span class="bus-<%= d.Route %> bus-icon"></span>
+        </span>
         <span class="time-value-bus"><%= d.busID %></span>
         <span class="time-value-desc"><%= d.Description %></span>
         <span class="time-value-min">
@@ -52,6 +56,7 @@
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/leaflet/dist/leaflet.js"></script>
 
     <script src="js/furball.js"></script>
     <script src="js/kittenbus.js"></script>

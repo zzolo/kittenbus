@@ -79,6 +79,9 @@
         // Create a bus ID
         d.busID = d.Route + d.Terminal;
 
+        // Make the description a bit more readable
+        d.Description = d.Description.replace(/\//ig, ' / ');
+
         return d;
       }),
 

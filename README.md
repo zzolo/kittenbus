@@ -2,6 +2,11 @@
 
 :bus:!
 
+## About stop
+
+* Bus stop ID: `17946`
+* [NexTrip link](http://www.metrotransit.org/NexTripBadge.aspx?stopnumber=17946)
+
 ## Installation
 
 We want to have this project be in a "kiosk".  These instructions are intended for a Mac.
