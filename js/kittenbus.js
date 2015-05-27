@@ -209,7 +209,7 @@ $(document).ready(function() {
       _.each(this.lineColors, function(c, ci) {
         _this.lineMarkers[ci] = L.MakiMarkers.icon({
           icon: 'bus',
-          color: c,
+          color: (!c || c === 'transparent') ? '#222222' : c,
           size: 'm'
         });
       });
