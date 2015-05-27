@@ -33,7 +33,7 @@ download_clean:
 # http://spatialreference.org/ref/epsg/nad83-utm-zone-15n/
 $(build_routes_geojson): $(local_routes_shp)
 	mkdir -p $(build)
-	ogr2ogr -f "GeoJSON" $(build_routes_geojson) $(local_routes_shp) -where "line_id IN ($(routes))" -s_srs EPSG:26915 -t_srs EPSG:4326
+	ogr2ogr -f "GeoJSON" $(build_routes_geojson) $(local_routes_shp) -dialect "sqlite" -sql "SELECT ST_LineMerge(geometry) AS geometry, * FROM TransitRoutesByTermLetter WHERE line_id IN ($(routes))" -s_srs EPSG:26915 -t_srs EPSG:4326
 
 build: $(build_routes_geojson)
 build_clean:

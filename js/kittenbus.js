@@ -9,7 +9,7 @@ $(document).ready(function() {
     el: '.kittenbus',
     data: {},
     stopLocation: [44.97770, -93.27499],
-    stopColors: {
+    lineColors: {
       // Keep in line with CSS
       4: '#0CBCBC',
       6: '#2053C8',
@@ -18,7 +18,7 @@ $(document).ready(function() {
       141: 'transparent',
       698: 'transparent'
     },
-    stopOrder: {
+    lineOrder: {
       4: 1,
       6: 2,
       12: 4,
@@ -34,6 +34,14 @@ $(document).ready(function() {
       opacity: 0.7,
       fillOpacity: 0.7
     },
+    starIcon: L.icon({
+      iconUrl: 'images/star.svg',
+      iconSize: [30, 30],
+      shadowSize: [0, 0],
+      iconAnchor: [15, 15],
+      shadowAnchor: [0, 0],
+      popupAnchor: [0, -15]
+    }),
 
     // Constructor
     initialize: function() {
@@ -83,18 +91,29 @@ $(document).ready(function() {
       this.removeMessage();
     },
 
+    // Handle furball stop data
+    fullballData: function(data) {
+      // If we have data, then all should be up and running
+      this.removeMessage();
+
+      // Update times
+      this.renderTimes(_.clone(data.data));
+
+      // Render bus markers
+      this.renderBuses(_.clone(data.data));
+    },
+
     // Darw map
     renderMap: function() {
       var _this = this;
-      var adjustedRoutes = _.clone(this.data.routes);
       var lineCount = 0;
       var lineFound;
 
       // Make map
       this.map = L.map('map-container', {
         attributionControl: false,
-        zoomControl: false,
-        scrollWheelZoom: false
+        zoomControl: false
+        //scrollWheelZoom: false
       });
 
       // Add base map
@@ -108,15 +127,18 @@ $(document).ready(function() {
       this.map.panBy([this.width / 4, 0]);
 
       // Add point for stop
-      this.stopMarker = L.marker(this.stopLocation).addTo(this.map);
+      this.stopMarker = L.marker(this.stopLocation, {
+        icon: this.starIcon
+      }).addTo(this.map);
 
       // Sort routes for rendering
-      adjustedRoutes.features = _.sortBy(adjustedRoutes.features, function(r) {
-        return _this.stopOrder[r.properties.line_id];
+      this.data.adjustedRoutes = _.clone(this.data.routes);
+      this.data.adjustedRoutes.features = _.sortBy(this.data.adjustedRoutes.features, function(r) {
+        return _this.lineOrder[r.properties.line_id];
       });
 
       // Offset routes for visual affect
-      adjustedRoutes.features = _.map(adjustedRoutes.features, function(r) {
+      this.data.adjustedRoutes.features = _.map(this.data.adjustedRoutes.features, function(r) {
         var line = r.properties.line_id;
         if (line !== lineFound) {
           lineCount++;
@@ -126,23 +148,32 @@ $(document).ready(function() {
         return _this.adjustMapFeature(r, lineCount - 3);
       });
 
+      // Add lookup for routes by busID (route and terminal)
+      this.routeLookup = {};
+      _.each(this.data.adjustedRoutes.features, function(r) {
+        var busID = '' + r.properties.line_id +
+          ((r.properties.term_lette) ? r.properties.term_lette : '');
+        _this.routeLookup[busID] = r;
+      });
+
       // Add routes
-      this.mapRoutes = L.geoJson(this.data.routes, {
+      this.mapRoutes = L.geoJson(this.data.adjustedRoutes, {
         style: function(feature) {
           var style = _.clone(_this.routeStyle);
-          style.color = _this.stopColors[feature.properties.line_id];
+          style.color = _this.lineColors[feature.properties.line_id];
           return style;
         }
       }).addTo(this.map);
-    },
 
-    // Handle furball stop data
-    fullballData: function(data) {
-      // If we have data, then all should be up and running
-      this.removeMessage();
-
-      // Update times
-      this.renderTimes(_.clone(data.data));
+      // Make icons for bus
+      this.lineMarkers = {};
+      _.each(this.lineColors, function(c, ci) {
+        _this.lineMarkers[ci] = L.MakiMarkers.icon({
+          icon: 'bus',
+          color: 'c',
+          size: 'm'
+        });
+      });
     },
 
     // Render time listing
@@ -174,6 +205,54 @@ $(document).ready(function() {
 
       // Remove
       times.exit().remove();
+    },
+
+    // Render markers on map
+    renderBuses: function(data) {
+      var _this = this;
+      this.busMarkers = this.busMarkers || {};
+
+      // Mark all as not found
+      _.each(this.busMarkers, function(m, mi) {
+        _this.busMarkers[mi].found = false;
+      });
+
+      _.each(data, function(b) {
+        var busLatLng;
+        var busTurf;
+
+        if (b.VehicleLatitude && b.VehicleLongitude) {
+          // Snap to route (TODO: GET WORKING)
+          busLatLng = [b.VehicleLatitude, b.VehicleLongitude];
+          busTurf = turf.scratchPost(
+            _this.routeLookup[b.busID],
+            turf.point(busLatLng.reverse())
+          );
+
+          // Check if exists
+          if (!_this.busMarkers[b.BlockNumber]) {
+            _this.busMarkers[b.BlockNumber] = {
+              id: b.BlockNumber,
+              found: true,
+              location: [b.VehicleLatitude, b.VehicleLongitude],
+              marker: L.marker([b.VehicleLatitude, b.VehicleLongitude], {
+                icon: _this.lineMarkers[b.Route]
+              })
+                .bindPopup(_this.debugOutputHTML(b))
+                .addTo(_this.map)
+            };
+          }
+          else {
+            _this.busMarkers[b.BlockNumber].found = true;
+
+            // Move marker
+            _this.busMarkers[b.BlockNumber].marker.moveTo([b.VehicleLatitude, b.VehicleLongitude], null, 29000);
+
+            // Set new location
+            _this.busMarkers[b.BlockNumber].location = [b.VehicleLatitude, b.VehicleLongitude];
+          }
+        }
+      });
     },
 
     // Set a message
@@ -215,6 +294,11 @@ $(document).ready(function() {
       }
 
       return feature;
+    },
+
+    // Helpful output
+    debugOutputHTML: function(data) {
+      return '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
     },
 
     // Get data
