@@ -22,12 +22,20 @@
         <div class="full-message-content">Loading ...</div>
       </div>
 
+      <!--
       <div class="note">
         The map above is just a draft.  Bus times with a clock icon <i class="fa fa-clock-o"></i> are scheduled times and not based on actual bus movements.
       </div>
+      -->
 
-      <div class="times-container">
-        <div class="times"></div>
+      <div class="listings">
+        <div class="times-container listing">
+          <div class="times"></div>
+        </div>
+
+        <div class="bikes-container listing">
+          <div class="bikes"></div>
+        </div>
       </div>
 
       <div id="map-container">
@@ -51,6 +59,16 @@
       </div>
     </script>
 
+    <script type="text/template" id="bikes-item-template">
+      <div class="">
+        <span class="bike-icon station"></span>
+        <span class="bike-count"><%= d.data.ba %> bikes</span>
+        <span class="bike-station">at <%= d.data.s %></span>
+        <!-- <%= d.data.da %> docks -->
+      </div>
+    </script>
+
+
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
@@ -62,6 +80,7 @@
 
     <script src="js/scratch-post.js"></script>
     <script src="js/prowl.js"></script>
+    <script src="js/catbike.js"></script>
     <script src="js/furball.js"></script>
     <script src="js/kittenbus.js"></script>
   </body>

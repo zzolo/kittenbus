@@ -42,6 +42,14 @@ $(document).ready(function() {
       shadowAnchor: [0, 0],
       popupAnchor: [0, -15]
     }),
+    bikeStationStyle: {
+      radius: 5,
+      fillColor: '#49DB00',
+      color: '#49DB00',
+      weight: 0,
+      opacity: 0.9,
+      fillOpacity: 0.9
+    },
 
     // Constructor
     initialize: function() {
@@ -52,20 +60,27 @@ $(document).ready(function() {
 
       // Get some template
       this.templates = {
-        timesItem: _.template($('#times-item-template').html())
+        timesItem: _.template($('#times-item-template').html()),
+        bikesItem: _.template($('#bikes-item-template').html())
       };
 
       // Create new furball
       this.furball = new Furball();
 
       // Handle events from furball
-      this.furball.on('data', _.bind(this.fullballData, this));
+      this.furball.on('data', _.bind(this.furballData, this));
 
       // If we don't have data from furball in a while, then
       // we shouldn't display antyhing
       this.furball.on('timeout', _.bind(function(error) {
         this.setMessage('We have been unable to get up-to-date information about the bus.  Hopefully this issue will be resolved soon.');
       }, this));
+
+      // Create new cat bike (Nice Ride)
+      this.catbike = new Catbike();
+
+      // Handle catbike data
+      this.catbike.on('data', _.bind(this.catbikeData, this));
 
       // Get data
       this.getData();
@@ -81,8 +96,9 @@ $(document).ready(function() {
       this.width = $(window).width();
       this.height = $(window).height();
 
-      // Start fullball
+      // Start data providers
       this.furball.start();
+      this.catbike.start();
 
       // Draw map
       this.renderMap();
@@ -92,7 +108,7 @@ $(document).ready(function() {
     },
 
     // Handle furball stop data
-    fullballData: function(data) {
+    furballData: function(data) {
       // If we have data, then all should be up and running
       this.removeMessage();
 
@@ -103,11 +119,21 @@ $(document).ready(function() {
       this.renderBuses(_.clone(data.data));
     },
 
+    // Handle incoming data from catbike
+    catbikeData: function(data) {
+      this.renderBikes(data.stations);
+    },
+
     // Darw map
     renderMap: function() {
       var _this = this;
       var lineCount = 0;
       var lineFound;
+
+      // Only draw once
+      if (this.map) {
+        return;
+      }
 
       // Make map
       this.map = L.map('map-container', {
@@ -181,7 +207,7 @@ $(document).ready(function() {
       var _this = this;
 
       // Join data.  Only get one bus per time
-      var times = d3.select('.times').selectAll('.time-value')
+      var times = d3.select('.times').selectAll('.row')
         .data(data, function(d, di) {
           return d.busID;
         })
@@ -195,7 +221,7 @@ $(document).ready(function() {
 
       // Add new times
       times.enter().append('div')
-        .classed('time-value', true);
+        .classed('row', true);
 
       // Enter and update
       times
@@ -253,6 +279,67 @@ $(document).ready(function() {
           }
         }
       });
+    },
+
+    // Render bikes
+    renderBikes: function(stations) {
+      var _this = this;
+      var stopPoint = turf.point(_.clone(_this.stopLocation).reverse());
+      var listed;
+
+      // Make sure map is available
+      this.renderMap();
+
+      // Draw stations if not done
+      if (!this.bikeStations) {
+        this.bikeStations = [];
+
+        // Add default markers
+        _.each(stations, function(s) {
+          _this.bikeStations.push({
+            id: s.id,
+            data: s,
+            marker: L.circleMarker([s.la, s.lo], _this.bikeStationStyle)
+              .bindPopup(_this.debugOutputHTML(s))
+              .addTo(_this.map),
+            distance: turf.distance(
+              stopPoint,
+              turf.point([s.la, s.lo].reverse())
+            )
+          });
+        });
+
+        // The closest 4 get some special TODO
+        this.bikeStations = _.sortBy(this.bikeStations, function(b) {
+          return b.distance;
+        });
+      }
+
+      // Update listing
+      listed = d3.select('.bikes').selectAll('.row')
+        .data(_.first(this.bikeStations, 4), function(d, di) {
+          return d.id;
+        })
+        .sort(function(a, b) {
+          return a.distance - b.distance;
+        });
+
+      // Update
+      listed
+        .classed('updated', true);
+
+      // Add new times
+      listed.enter().append('div')
+        .classed('row', true);
+
+      // Enter and update
+      listed
+        .html(function(d) {
+          return _this.templates.bikesItem({ d: d });
+        });
+
+      // Remove
+      listed.exit().remove();
     },
 
     // Set a message

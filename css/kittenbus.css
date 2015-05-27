@@ -39,6 +39,11 @@ body  input[type="search"] {
   background-color: transparent;
 }
 
+.station {
+  color: #49DB00;
+  background-color: #49DB00;
+}
+
 
 .kittenbus {
   position: absolute;
@@ -92,24 +97,29 @@ body  input[type="search"] {
   right: 0;
 }
 
-.times-container {
+
+.listings {
   position: absolute;
   top: 0;
   right: 0;
+  bottom: 0;
   margin: 0.5em 0.5em 0 0;
   width: 33.3333333%;
   z-index: 10;
   font-size: 1em;
-  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.listing {
   border-radius: 3px;
+  margin-bottom: 2em;
 }
 
-.times .time-value {
-  margin-bottom: 0.25em;
-  padding: 0.25em 0.5em;
+.listing .row {
+  padding: 0.5em 1em;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
-.times  .time-value:nth-child(even) {
+.listing .row:nth-child(even) {
   background-color: rgba(240, 240, 240, 0.8);
 }
 
@@ -143,4 +153,23 @@ body  input[type="search"] {
 
 .times .time-value .fa-clock-o {
   font-size: 0.5em;
+}
+
+.bikes .bike-icon {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  margin: 0 0.5em;
+  vertical-align: middle;
+}
+
+.bikes .bike-count {
+  display: inline-block;
+  min-width: 20%;
+}
+
+.bikes .bike-station {
+  display: inline-block;
+  min-width: 70%;
 }
