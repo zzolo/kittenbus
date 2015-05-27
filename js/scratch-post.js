@@ -25,7 +25,7 @@
         }
       });
 
-      return currentPoint;
+      return closest;
     }
     else {
       return point;

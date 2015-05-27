@@ -48,10 +48,20 @@
         <span class="time-value-icon">
           <span class="bus-<%= d.Route %> bus-icon"></span>
         </span>
-        <span class="time-value-bus"><%= d.busID %></span>
+
+        <span class="time-value-bus">
+          <%= d.routeID %>
+
+          <% if (d.VehicleLatitude) { %>
+            <i class="fa fa-map-marker"></i>
+          <% } %>
+        </span>
+
         <span class="time-value-desc"><%= d.Description %></span>
+
         <span class="time-value-min">
           <%= (d.minutes < 3) ? 'Due' : d.minutes + ' min' %>
+
           <% if (!d.Actual) { %>
             <i class="fa fa-clock-o"></i>
           <% } %>
@@ -61,9 +71,11 @@
 
     <script type="text/template" id="bikes-item-template">
       <div class="">
-        <span class="bike-icon station"></span>
+        <span class="bike-icon station">
+          <img src="images/bicycle-default-maki.svg">
+        </span>
+        <span class="bike-station"><%= d.data.s %></span>
         <span class="bike-count"><%= d.data.ba %> bikes</span>
-        <span class="bike-station">at <%= d.data.s %></span>
         <!-- <%= d.data.da %> docks -->
       </div>
     </script>

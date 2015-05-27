@@ -76,8 +76,11 @@
         d.seconds = d.time.diff(moment(), 'seconds');
         d.minutes = Math.floor(d.seconds / 60);
 
+        // Create a route ID
+        d.routeID = d.Route + d.Terminal;
+
         // Create a bus ID
-        d.busID = d.Route + d.Terminal;
+        d.busID = d.BlockNumber + '-' + d.routeID;
 
         // Make the description a bit more readable
         d.Description = d.Description.replace(/\//ig, ' / ');

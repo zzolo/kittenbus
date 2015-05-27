@@ -50,6 +50,14 @@ $(document).ready(function() {
       opacity: 0.9,
       fillOpacity: 0.9
     },
+    bikeIcon: L.icon({
+      iconUrl: 'images/bicycle-default-maki.svg',
+      iconSize: [35, 35],
+      shadowSize: [0, 0],
+      iconAnchor: [18, 18],
+      shadowAnchor: [0, 0],
+      popupAnchor: [0, -18]
+    }),
 
     // Constructor
     initialize: function() {
@@ -112,11 +120,16 @@ $(document).ready(function() {
       // If we have data, then all should be up and running
       this.removeMessage();
 
+      // Only get certain data for next 30 minutes
+      var recent = _.filter(_.clone(data.data), function(d) {
+        return (d.minutes <= 30);
+      });
+
       // Update times
-      this.renderTimes(_.clone(data.data));
+      this.renderTimes(recent);
 
       // Render bus markers
-      this.renderBuses(_.clone(data.data));
+      this.renderBuses(recent);
     },
 
     // Handle incoming data from catbike
@@ -174,12 +187,12 @@ $(document).ready(function() {
         return _this.adjustMapFeature(r, lineCount - 3);
       });
 
-      // Add lookup for routes by busID (route and terminal)
+      // Add lookup for routes by routeID (route and terminal)
       this.routeLookup = {};
       _.each(this.data.adjustedRoutes.features, function(r) {
-        var busID = '' + r.properties.line_id +
+        var routeID = '' + r.properties.line_id +
           ((r.properties.term_lette) ? r.properties.term_lette : '');
-        _this.routeLookup[busID] = r;
+        _this.routeLookup[routeID] = r;
       });
 
       // Add routes
@@ -196,7 +209,7 @@ $(document).ready(function() {
       _.each(this.lineColors, function(c, ci) {
         _this.lineMarkers[ci] = L.MakiMarkers.icon({
           icon: 'bus',
-          color: 'c',
+          color: c,
           size: 'm'
         });
       });
@@ -209,7 +222,7 @@ $(document).ready(function() {
       // Join data.  Only get one bus per time
       var times = d3.select('.times').selectAll('.row')
         .data(data, function(d, di) {
-          return d.busID;
+          return d.BlockNumber;
         })
         .sort(function(a, b) {
           return a.time - b.time;
@@ -246,21 +259,23 @@ $(document).ready(function() {
       _.each(data, function(b) {
         var busLatLng;
         var busTurf;
+        var tempMarkers;
 
         if (b.VehicleLatitude && b.VehicleLongitude) {
           // Snap to route (TODO: GET WORKING)
+          /*
           busLatLng = [b.VehicleLatitude, b.VehicleLongitude];
           busTurf = turf.scratchPost(
-            _this.routeLookup[b.busID],
+            _this.routeLookup[b.routeID],
             turf.point(busLatLng.reverse())
           );
+          */
 
           // Check if exists
-          if (!_this.busMarkers[b.BlockNumber]) {
-            _this.busMarkers[b.BlockNumber] = {
-              id: b.BlockNumber,
+          if (!_this.busMarkers[b.busID]) {
+            _this.busMarkers[b.busID] = {
+              id: b.busID,
               found: true,
-              location: [b.VehicleLatitude, b.VehicleLongitude],
               marker: L.marker([b.VehicleLatitude, b.VehicleLongitude], {
                 icon: _this.lineMarkers[b.Route]
               })
@@ -269,14 +284,20 @@ $(document).ready(function() {
             };
           }
           else {
-            _this.busMarkers[b.BlockNumber].found = true;
+            _this.busMarkers[b.busID].found = true;
 
-            // Move marker
-            _this.busMarkers[b.BlockNumber].marker.moveTo([b.VehicleLatitude, b.VehicleLongitude], null, 29000);
-
-            // Set new location
-            _this.busMarkers[b.BlockNumber].location = [b.VehicleLatitude, b.VehicleLongitude];
+            // Move marker.
+            _this.busMarkers[b.busID].marker.setLatLng([b.VehicleLatitude, b.VehicleLongitude]);
           }
+        }
+      });
+
+      // Remove ones that are not there anymore
+      tempMarkers = _.clone(this.busMarkers)
+      _.each(tempMarkers, function(m, mi) {
+        if (!m.found) {
+          _this.map.removeLayer(_this.busMarkers[mi].marker);
+          delete _this.busMarkers[mi];
         }
       });
     },
@@ -294,30 +315,40 @@ $(document).ready(function() {
       if (!this.bikeStations) {
         this.bikeStations = [];
 
-        // Add default markers
-        _.each(stations, function(s) {
-          _this.bikeStations.push({
-            id: s.id,
-            data: s,
-            marker: L.circleMarker([s.la, s.lo], _this.bikeStationStyle)
-              .bindPopup(_this.debugOutputHTML(s))
-              .addTo(_this.map),
-            distance: turf.distance(
-              stopPoint,
-              turf.point([s.la, s.lo].reverse())
-            )
-          });
+        // Determine distance and sort
+        stations = _.map(stations, function(s) {
+          s.distance = turf.distance(
+            stopPoint,
+            turf.point([s.la, s.lo].reverse())
+          );
+
+          return s;
         });
 
-        // The closest 4 get some special TODO
-        this.bikeStations = _.sortBy(this.bikeStations, function(b) {
-          return b.distance;
+        stations = _.sortBy(stations, function(s) {
+          return s.distance;
+        });
+
+        // Only use the top few stops
+        this.bikeStations = _.map(_.first(stations, 4), function(s) {
+          var station = {
+            id: s.id,
+            data: s,
+            marker: L.marker([s.la, s.lo], {
+              icon: _this.bikeIcon
+            })
+              .bindPopup(_this.debugOutputHTML(s))
+              .addTo(_this.map),
+            distance: s.distance
+          };
+
+          return station;
         });
       }
 
       // Update listing
       listed = d3.select('.bikes').selectAll('.row')
-        .data(_.first(this.bikeStations, 4), function(d, di) {
+        .data(this.bikeStations, function(d, di) {
           return d.id;
         })
         .sort(function(a, b) {

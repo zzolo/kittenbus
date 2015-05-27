@@ -39,11 +39,6 @@ body  input[type="search"] {
   background-color: transparent;
 }
 
-.station {
-  color: #49DB00;
-  background-color: #49DB00;
-}
-
 
 .kittenbus {
   position: absolute;
@@ -116,11 +111,11 @@ body  input[type="search"] {
 
 .listing .row {
   padding: 0.5em 1em;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .listing .row:nth-child(even) {
-  background-color: rgba(240, 240, 240, 0.8);
+  background-color: rgba(240, 240, 240, 0.9);
 }
 
 .times .time-value-icon {
@@ -151,16 +146,19 @@ body  input[type="search"] {
   min-width: 20%;
 }
 
-.times .time-value .fa-clock-o {
-  font-size: 0.5em;
+.times .fa {
+  font-size: 0.4em;
+  padding-left: 0.1em;
 }
 
 .bikes .bike-icon {
   display: inline-block;
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  margin: 0 0.5em;
+  width: 10%;
+}
+
+.bikes .bike-icon img {
+  width: 1.5em;
+  height: 1.5em;
   vertical-align: middle;
 }
 
@@ -171,5 +169,5 @@ body  input[type="search"] {
 
 .bikes .bike-station {
   display: inline-block;
-  min-width: 70%;
+  min-width: 60%;
 }
