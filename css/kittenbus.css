@@ -39,6 +39,19 @@ body  input[type="search"] {
   background-color: transparent;
 }
 
+.bus-4.bus-icon {
+  background: transparent url('../line-4-bear.svg') center center no-repeat;
+  background-size: 100%;
+}
+.bus-6.bus-icon {
+  background: transparent url('../line-6-racoon.svg') center center no-repeat;
+  background-size: 100%;
+}
+.bus-61.bus-icon {
+  background: transparent url('../line-61-moose.svg') center center no-repeat;
+  background-size: 100%;
+}
+
 
 .kittenbus {
   position: absolute;
