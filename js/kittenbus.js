@@ -46,25 +46,25 @@ $(document).ready(function() {
       iconUrl: 'images/line-4-bear.svg',
       iconSize: [35, 35 / 1.25],
       shadowSize: [0, 0],
-      iconAnchor: [12, 12 / 1.25],
+      iconAnchor: [17.5, 17.5 / 1.25],
       shadowAnchor: [0, 0],
-      popupAnchor: [0, -12 / 1.25]
+      popupAnchor: [0, -17.5 / 1.25]
     }),
     bus6icon: L.icon({
       iconUrl: 'images/line-6-raccoon.svg',
-      iconSize: [35, 35 / 1.4],
+      iconSize: [40, 40 / 1.4],
       shadowSize: [0, 0],
-      iconAnchor: [12, 12 / 1.4],
+      iconAnchor: [20, 20 / 1.4],
       shadowAnchor: [0, 0],
-      popupAnchor: [0, -12 / 1.4]
+      popupAnchor: [0, -20 / 1.4]
     }),
     bus61icon: L.icon({
       iconUrl: 'images/line-61-moose.svg',
       iconSize: [35, 35 / 1.13],
       shadowSize: [0, 0],
-      iconAnchor: [12, 12 / 1.13],
+      iconAnchor: [17.5, 17.5 / 1.13],
       shadowAnchor: [0, 0],
-      popupAnchor: [0, -12 / 1.13]
+      popupAnchor: [0, -17.5 / 1.13]
     }),
     bikeStationStyle: {
       radius: 5,
@@ -283,9 +283,9 @@ $(document).ready(function() {
         var busLatLng;
         var busTurf;
         var tempMarkers;
-        var markerIcon = (b.Route == 6) ? bus6icon :
-          (b.Route == 4) ? bus4icon :
-          (b.Route == 61) ? bus61icon : _this.lineMarkers[b.Route];
+        var markerIcon = (b.Route == 6) ? _this.bus6icon :
+          (b.Route == 4) ? _this.bus4icon :
+          (b.Route == 61) ? _this.bus61icon : _this.lineMarkers[b.Route];
 
         if (b.VehicleLatitude && b.VehicleLongitude) {
           // Snap to route (TODO: GET WORKING)
