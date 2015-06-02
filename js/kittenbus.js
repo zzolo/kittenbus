@@ -190,7 +190,8 @@ $(document).ready(function() {
 
       // Add point for stop
       this.stopMarker = L.marker(this.stopLocation, {
-        icon: this.starIcon
+        icon: this.starIcon,
+        zIndexOffset: -100
       }).addTo(this.map);
 
       // Sort routes for rendering
@@ -361,7 +362,8 @@ $(document).ready(function() {
             id: s.id,
             data: s,
             marker: L.marker([s.la, s.lo], {
-              icon: _this.bikeIcon
+              icon: _this.bikeIcon,
+              zIndexOffset: -1000
             })
               .bindPopup(_this.debugOutputHTML(s))
               .addTo(_this.map),

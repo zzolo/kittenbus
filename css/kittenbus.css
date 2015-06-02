@@ -31,12 +31,12 @@ body  input[type="search"] {
   background-color: #FF7C10;
 }
 .bus-141 {
-  color: transparent;
-  background-color: transparent;
+  color: #222222;
+  background-color: #222222;
 }
 .bus-698 {
-  color: transparent;
-  background-color: transparent;
+  color: #222222;
+  background-color: #222222;
 }
 
 .bus-4.bus-icon {
@@ -147,7 +147,7 @@ body  input[type="search"] {
   width: 1em;
   height: 1em;
   vertical-align: middle;
-  margin-right: 0.75em;
+  margin-right: 0.9em;
 }
 
 
