@@ -157,7 +157,7 @@ body  input[type="search"] {
 
 .times .time-value-icon {
   display: inline-block;
-  min-width: 5%;
+  min-width: 8%;
 }
 
 .times .bus-icon {
@@ -165,7 +165,6 @@ body  input[type="search"] {
   width: 1em;
   height: 1em;
   vertical-align: middle;
-  margin-right: 1.25em;
 }
 
 
@@ -174,7 +173,6 @@ body  input[type="search"] {
 .times .bus-61.bus-icon {
   width: 2em;
   height: 2em;
-  margin-right: 0.5em;
 }
 
 .times .time-value-bus {
@@ -190,7 +188,7 @@ body  input[type="search"] {
 
 .times .time-value-time {
   display: inline-block;
-  min-width: 20%;
+  min-width: 17%;
 }
 
 .times .fa {
@@ -200,7 +198,7 @@ body  input[type="search"] {
 
 .bikes .bike-icon {
   display: inline-block;
-  width: 10%;
+  width: 18%;
 }
 
 .bikes .bike-icon img {
@@ -209,12 +207,12 @@ body  input[type="search"] {
   vertical-align: middle;
 }
 
-.bikes .bike-count {
-  display: inline-block;
-  min-width: 20%;
-}
-
 .bikes .bike-station {
   display: inline-block;
-  min-width: 60%;
+  min-width: 65%;
+}
+
+.bikes .bike-count {
+  display: inline-block;
+  min-width: 15%;
 }
