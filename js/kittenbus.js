@@ -141,6 +141,12 @@ $(document).ready(function() {
 
     // Handle furball stop data
     furballData: function(data) {
+      // If there is error happening, then we shouldn't update the
+      // data
+      if (data.error) {
+        return;
+      }
+
       // If we have data, then all should be up and running
       this.removeMessage();
 

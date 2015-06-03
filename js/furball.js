@@ -15,6 +15,9 @@
 
   // Add events and other methods
   _.extend(Furball.prototype, Backbone.Events, {
+    // No data counter
+    noDataCount: 0,
+
     // Start interval and do right away
     start: function() {
       this.intervalID = w.setInterval(_.bind(this.request, this), this.options.interval);
@@ -51,6 +54,7 @@
 
           // Send data
           _this.trigger('data', {
+            error: _this.noDataError(data),
             stop: stop,
             data: _this.parse(data)
           });
@@ -109,6 +113,30 @@
       }
 
       this.timeoutID = w.setTimeout(_.bind(this.timeoutReached, this), this.options.timeout * 60 * 1000);
+    },
+
+    // If there is no data, raise error the first couple times it happens as its
+    // probably just a bad feed, but if its more, then its just no buses
+    noDataError: function(data) {
+      var hasData = (_.isArray(data) && data.length > 0);
+
+      // If valid, then just reset the noData count
+      if (hasData) {
+        this.noDataCount = 0;
+        return false;
+      }
+      else {
+        noDataCount++;
+
+        // If not valid and this is the first or second time,
+        // then we want to ignore
+        if (noDataCount <= 2) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
     }
   });
 
