@@ -31,8 +31,8 @@ $(document).ready(function() {
       fillColor: 'transparent',
       color: 'transparent',
       weight: 3,
-      opacity: 0.7,
-      fillOpacity: 0.7
+      opacity: 1,
+      fillOpacity: 1
     },
     starIcon: L.icon({
       iconUrl: 'images/star.svg',
@@ -167,6 +167,9 @@ $(document).ready(function() {
       var lineCount = 0;
       var lineFound;
 
+      // Could be line_id if routes by terminal
+      var routeProp = 'route';
+
       // Only draw once
       if (this.map) {
         return;
@@ -197,12 +200,12 @@ $(document).ready(function() {
       // Sort routes for rendering
       this.data.adjustedRoutes = _.clone(this.data.routes);
       this.data.adjustedRoutes.features = _.sortBy(this.data.adjustedRoutes.features, function(r) {
-        return _this.lineOrder[r.properties.line_id];
+        return _this.lineOrder[r.properties[routeProp]];
       });
 
       // Offset routes for visual affect
       this.data.adjustedRoutes.features = _.map(this.data.adjustedRoutes.features, function(r) {
-        var line = r.properties.line_id;
+        var line = r.properties[routeProp];
         if (line !== lineFound) {
           lineCount++;
         }
@@ -214,7 +217,7 @@ $(document).ready(function() {
       // Add lookup for routes by routeID (route and terminal)
       this.routeLookup = {};
       _.each(this.data.adjustedRoutes.features, function(r) {
-        var routeID = '' + r.properties.line_id +
+        var routeID = '' + r.properties[routeProp] +
           ((r.properties.term_lette) ? r.properties.term_lette : '');
         _this.routeLookup[routeID] = r;
       });
@@ -223,7 +226,7 @@ $(document).ready(function() {
       this.mapRoutes = L.geoJson(this.data.adjustedRoutes, {
         style: function(feature) {
           var style = _.clone(_this.routeStyle);
-          style.color = _this.lineColors[feature.properties.line_id];
+          style.color = _this.lineColors[feature.properties[routeProp]];
           return style;
         }
       }).addTo(this.map);
