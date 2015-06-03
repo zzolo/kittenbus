@@ -194,7 +194,7 @@ $(document).ready(function() {
       // Add point for stop
       this.stopMarker = L.marker(this.stopLocation, {
         icon: this.starIcon,
-        zIndexOffset: -100
+        zIndexOffset: 1000
       }).addTo(this.map);
 
       // Sort routes for rendering
