@@ -150,9 +150,9 @@ $(document).ready(function() {
       // If we have data, then all should be up and running
       this.removeMessage();
 
-      // Only get certain data for next 30 minutes
+      // Only get certain data for next 20-ish minutes
       var recent = _.filter(_.clone(data.data), function(d) {
-        return (d.minutes <= 30);
+        return (d.minutes <= 22);
       });
 
       // Update times
@@ -251,6 +251,15 @@ $(document).ready(function() {
     // Render time listing
     renderTimes: function(data) {
       var _this = this;
+
+      // if there's no data, them put up message.
+      if (data.length === 0) {
+        $('.no-buses').show();
+        return;
+      }
+      else {
+        $('.no-buses').hide();
+      }
 
       // Join data.  Only get one bus per time
       var times = d3.select('.times').selectAll('.row')
