@@ -44,27 +44,27 @@ $(document).ready(function() {
     }),
     bus4icon: L.icon({
       iconUrl: 'images/line-4-bear.svg',
-      iconSize: [35, 35 / 1.25],
+      iconSize: [45, 45],
       shadowSize: [0, 0],
-      iconAnchor: [17.5, 17.5 / 1.25],
+      iconAnchor: [22.5, 22.5],
       shadowAnchor: [0, 0],
-      popupAnchor: [0, -17.5 / 1.25]
+      popupAnchor: [0, -2.5]
     }),
     bus6icon: L.icon({
       iconUrl: 'images/line-6-raccoon.svg',
-      iconSize: [40, 40 / 1.4],
+      iconSize: [45, 45],
       shadowSize: [0, 0],
-      iconAnchor: [20, 20 / 1.4],
+      iconAnchor: [22.5, 22.5],
       shadowAnchor: [0, 0],
-      popupAnchor: [0, -20 / 1.4]
+      popupAnchor: [0, -2.5]
     }),
     bus61icon: L.icon({
       iconUrl: 'images/line-61-moose.svg',
-      iconSize: [35, 35 / 1.13],
+      iconSize: [45, 45],
       shadowSize: [0, 0],
-      iconAnchor: [17.5, 17.5 / 1.13],
+      iconAnchor: [22.5, 22.5],
       shadowAnchor: [0, 0],
-      popupAnchor: [0, -17.5 / 1.13]
+      popupAnchor: [0, -2.5]
     }),
     bikeStationStyle: {
       radius: 5,
@@ -398,7 +398,8 @@ $(document).ready(function() {
         });
 
       // Remove
-      listed.exit().remove();
+      listed.exit()
+        .remove();
     },
 
     // Set a message
