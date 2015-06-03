@@ -147,15 +147,15 @@ body  input[type="search"] {
   width: 1em;
   height: 1em;
   vertical-align: middle;
-  margin-right: 0.9em;
+  margin-right: 1.25em;
 }
 
 
 .times .bus-4.bus-icon,
 .times .bus-6.bus-icon,
 .times .bus-61.bus-icon {
-  width: 1.5em;
-  height: 1.5em;
+  width: 2em;
+  height: 2em;
   margin-right: 0.5em;
 }
 
