@@ -1,3 +1,5 @@
+/* global $:false, _:false, Backbone:false, L:false, d3:false, moment:false, turf:false */
+
 /**
  * Addes a moveTo function to Leaflet markers.
  */

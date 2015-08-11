@@ -1,3 +1,5 @@
+/* global $:false, _:false, Backbone:false, L:false, d3:false, moment:false, turf:false */
+
 /**
  * Metrotransit data collector.
  */
@@ -126,11 +128,11 @@
         return false;
       }
       else {
-        noDataCount++;
+        this.noDataCount++;
 
         // If not valid and this is the first or second time,
         // then we want to ignore
-        if (noDataCount <= 2) {
+        if (this.noDataCount <= 2) {
           return true;
         }
         else {

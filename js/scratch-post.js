@@ -1,3 +1,5 @@
+/* global $:false, _:false, Backbone:false, L:false, d3:false, moment:false, turf:false */
+
 /**
  * A crude version of snap to line to work
  * with multi line.

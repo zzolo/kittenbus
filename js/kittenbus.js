@@ -1,3 +1,5 @@
+/* global $:false, _:false, Backbone:false, L:false, d3:false, Furball:false, Catbike:false, turf:false */
+
 /**
  * Main JS
  */
@@ -338,7 +340,7 @@ $(document).ready(function() {
       });
 
       // Remove ones that are not there anymore
-      tempMarkers = _.clone(this.busMarkers)
+      var tempMarkers = _.clone(this.busMarkers);
       _.each(tempMarkers, function(m, mi) {
         if (!m.found) {
           _this.map.removeLayer(_this.busMarkers[mi].marker);

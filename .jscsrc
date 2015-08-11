@@ -1,0 +1,9 @@
+{
+  "requireCurlyBraces": ["if"],
+
+  "excludeFiles": ["**"],
+  "validateJSDoc": {
+    "checkParamNames": true,
+    "requireParamTypes": true
+  }
+}
