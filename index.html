@@ -17,6 +17,32 @@
   </head>
   <body>
 
+    <!-- Container for kittenbus (map view) -->
+    <div class="catimations">
+      <div class="full-message">
+        <div class="full-message-content">Loading ...</div>
+      </div>
+
+      <div class="panels">
+        <div class="panel panel-1"></div>
+        <div class="panel panel-2"></div>
+        <div class="panel panel-3"></div>
+      </div>
+    </div>
+
+    <!-- Templates -->
+    <script type="text/template" id="catimation-panel">
+      <div class="panel-inner">
+        <div class="panel-top"><%= d.routeID %></div>
+        <div class="panel-middle">
+          <img src="<%= d.frameImage %>">
+        </div>
+        <div class="panel-bottom"><%= d.minutes %> minutes</div>
+      </div>
+    </script>
+
+
+    <!-- Container for kittenbus (map view) -->
     <div class="kittenbus">
       <div class="full-message">
         <div class="full-message-content">Loading ...</div>
@@ -104,6 +130,11 @@
     <script src="js/prowl.js"></script>
     <script src="js/catbike.js"></script>
     <script src="js/furball.js"></script>
+
+    <!--
     <script src="js/kittenbus.js"></script>
+    -->
+
+    <script src="js/catimations.js"></script>
   </body>
 </html>

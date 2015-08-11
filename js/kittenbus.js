@@ -87,6 +87,9 @@ $(document).ready(function() {
 
     // Constructor
     initialize: function() {
+      // Show container
+      $(this.el).show();
+
       // Some common properties
       this.$messageContainer = this.$('.full-message');
       this.$message = this.$('.full-message-content');
