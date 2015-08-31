@@ -33,11 +33,20 @@
     <!-- Templates -->
     <script type="text/template" id="catimation-panel">
       <div class="panel-inner">
-        <div class="panel-top"><%= d.routeID %></div>
         <div class="panel-middle">
           <img src="<%= d.frameImage %>">
         </div>
-        <div class="panel-bottom"><%= d.minutes %> minutes</div>
+
+        <div class="panel-bottom">
+          <div class="panel-left">
+            <span class="bus-bus">Bus <%= d.routeID %></span><br>
+            <span class="bus-description"><%= d.shortDesc %> </span>
+          </div>
+
+          <div class="panel-right">
+            <%= (d.minutes <= 2) ? 'Due' : d.minutes + ' min' %>
+          </div>
+        </div>
       </div>
     </script>
 

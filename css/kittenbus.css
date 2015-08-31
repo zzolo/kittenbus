@@ -43,10 +43,6 @@ body  input[type="search"] {
   right: 0;
 }
 
-.panel-1 { background-color: red; }
-.panel-2 { background-color: blue; }
-.panel-3 { background-color: green; }
-
 .panel-inner {
   width: 100%;
   height: 100%;
@@ -54,40 +50,55 @@ body  input[type="search"] {
 
 .panel-1 .panel-inner,
 .panel-2 .panel-inner {
-  border-right: 1px solid black;
-}
-.panel-top {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  font-size: 2em;
-  padding: 0.5em 1em;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: #FFFFFF;
+  border-right: 3px solid black;
 }
 
 .panel-bottom {
   position: absolute;
   bottom: 0;
   width: 100%;
-  font-size: 2em;
+  font-size: 1.5em;
   padding: 0.5em 1em;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.6);
   color: #FFFFFF;
+  line-height: 1.25em;
+  border-top: 3px solid black;
+}
+
+.panel-bottom .panel-left {
+  width: 50%;
+  float: left;
+  text-align: left;
+}
+
+.panel-bottom .panel-right {
+  width: 50%;
+  float: right;
+  font-size: 2.5em;
+  line-height: 1em;
+  text-align: right;
+}
+
+.panel-bottom .bus-bus {
+  font-size: 1.5em;
+}
+
+.panel-bottom .bus-description {
+  font-size: 0.85em;
 }
 
 .panel-middle {
   position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-60%);
   width: 100%;
 }
 
 .panel-middle img {
   max-width: 100%;
   max-height: 100%;
+  margin: 0 auto;
 }
 
 /* Kitten bus (map) */
