@@ -66,6 +66,10 @@ body  input[type="search"] {
   border-top: 3px solid black;
 }
 
+.new-bus .panel-bottom {
+  display: none;
+}
+
 .panel-bottom .panel-left {
   width: 50%;
   float: left;

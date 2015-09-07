@@ -10,7 +10,7 @@ $(document).ready(function() {
     // Container and other props
     el: '.catimations',
     animations: ['bubble', 'puzzle', 'face'],
-    assignedPanels: {},
+    assignedPanels: { 0: undefined, 1: undefined, 2: undefined },
 
     // Start
     initialize: function() {
@@ -50,30 +50,46 @@ $(document).ready(function() {
       var _this = this;
 
       // Debug
+      console.log('======');
       _.each(data.data, function(d) {
         console.log(d.busID + ' | ' + d.routeID + ' | ' + d.minutes);
       });
+      console.log('======');
 
-      // Trim the data, as busID's are not actually unique
+      // Trim the data, as busID's are not actually unique and look to be
+      // repeated each day
       data.data = _.first(data.data, 8);
 
-      // Remove any unused ones
+      // Remove any panels that are not available anymore
       _.each(_this.assignedPanels, function(p, pi) {
-        if (!_.findWhere(data.data, { busID: p.busID})) {
-          delete _this.assignedPanels[pi];
+        if (p && !_.findWhere(data.data, { busID: p.busID})) {
+          _this.assignedPanels[pi] = undefined;
         }
       });
 
       // Go through the buses and assign to panels
       _.each(data.data, function(d) {
-        // If we don't have enough assigned panels and this bus has not
-        // been assigned, otherwise update.
-        if (_.size(_this.assignedPanels) < 3 && !_this.assignedPanels[d.busID]) {
-          _this.assignedPanels[d.busID] = _.clone(d);
+        var found = _this.findWhereKey(_this.assignedPanels, { busID: d.busID });
+        var available = _.size(_.filter(_this.assignedPanels, function(p, pi) {
+          return (p === undefined);
+        }));
+
+        // If this bus has been assigned, then update
+        if (!_.isUndefined(found)) {
+          _this.assignedPanels[found] = _.extend(
+            _this.assignedPanels[found],
+            _.clone(d)
+          );
+          _this.assignedPanels[found].newBus = false;
         }
-        else if (_this.assignedPanels[d.busID]) {
-          _this.assignedPanels[d.busID] = _.extend(_.clone(d), {
-            animation: _this.assignedPanels[d.busID].animation
+        // Otherwise, if there are available panels, add
+        else if (available) {
+          _.find(_this.assignedPanels, function(p, pi) {
+            if (p === undefined) {
+              _this.assignedPanels[pi] = d;
+              _this.assignedPanels[pi].newBus = true;
+            }
+            return (p === undefined);
           });
         }
       });
@@ -86,7 +102,6 @@ $(document).ready(function() {
     render: function() {
       var _this = this;
       var panels = this.assignedPanels;
-      panels = _.sortBy(panels, 'minutes');
 
       // Determine the animation to use
       _.each(panels, function(p, pi) {
@@ -101,9 +116,14 @@ $(document).ready(function() {
       });
 
       // Determine image to show
-      panels = _.map(panels, function(p, i) {
-        p.frame = Math.max(1, Math.min(6, Math.ceil(p.minutes / 3)));
+      panels = _.each(panels, function(panel, i) {
+        var p = panels[i];
+        p.oldFrame = p.frame;
+        p.frame = Math.max(1, Math.min(6, Math.ceil(p.minutes / 2)));
         p.frame = 7 - p.frame;
+
+        // Is frame changing
+        p.frameChange = (p.oldFrame !== p.frame);
 
         // Get image frame
         p.frameImage = 'images/animations/' + _this.animations[p.animation] + '/' +
@@ -119,7 +139,25 @@ $(document).ready(function() {
 
       // Render each panel
       _.each(panels, function(p, i) {
-        _this.$('.panel-' + (i + 1)).html(_this.templates.panel({ d: p }));
+        var id = '.panel-' + (parseInt(i, 10) + 1);
+        var selector = (p.frameChange) ? id + ' .panel-middle' : '';
+        selector += (p.newBus) ? ', ' + id + ' .panel-bottom' : '';
+
+        // Hacky animations
+        if (selector && _this.$(selector).length) {
+          _this.$(selector).fadeOut('slow', function() {
+            _this.$(id).html(_this.templates.panel({ d: p }));
+
+            _this.$(selector).fadeIn('slow');
+          });
+        }
+        else {
+          _this.$(id).html(_this.templates.panel({ d: p }));
+
+          if (selector) {
+            _this.$(selector).fadeIn('slow');
+          }
+        }
       });
     },
 
@@ -133,6 +171,23 @@ $(document).ready(function() {
     removeMessage: function() {
       this.$messageContainer.fadeOut('fast');
     },
+
+    // Find key
+    findWhereKey: function(searchable, findable) {
+      var found;
+      var find = _.matcher(findable);
+
+      _.find(searchable, function(s, si) {
+        if (find(s)) {
+          found = si;
+          return true;
+        }
+
+        return false;
+      });
+
+      return found;
+    }
   });
 
   var catimations = new Catimations({});

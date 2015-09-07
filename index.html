@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="css/kittenbus.css">
   </head>
   <body>
-
-    <!-- Container for kittenbus (map view) -->
+    <!-- Container for catimations view -->
     <div class="catimations">
       <div class="full-message">
         <div class="full-message-content">Loading ...</div>
@@ -32,7 +31,7 @@
 
     <!-- Templates -->
     <script type="text/template" id="catimation-panel">
-      <div class="panel-inner">
+      <div class="panel-inner <%= (d.newBus) ? 'new-bus' : '' %> <%= (d.frameChange) ? 'new-frame' : '' %>">
         <div class="panel-middle">
           <img src="<%= d.frameImage %>">
         </div>
