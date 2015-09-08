@@ -51,11 +51,13 @@ $(document).ready(function() {
       var _this = this;
 
       // Debug
+      /*
       console.log('======');
       _.each(data.data, function(d) {
         console.log(d.busID + ' | ' + d.routeID + ' | ' + d.minutes);
       });
       console.log('======');
+      */
 
       // Trim the data, as busID's are not actually unique and look to be
       // repeated each day
