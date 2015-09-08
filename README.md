@@ -62,5 +62,9 @@ We want to have this project be in "kiosk".  These instructions are intended for
 ## Licensing
 
 * Transit map, copyright Kyril Negoda.  No use without permission.
-* Animals logos, copyright Juxtaposition Arts apprenticies.  No use without permission.
+* Animals logos and animations copyright Juxtaposition Arts apprentices.  No use without permission.
+    * "Face" sequence by Yupha Chang, Senior Graphics Lab Apprentice
+    * "Puzzle" sequence by King Thao, Graphics Lab Apprentice
+    * "Bubble Gum" sequence by Cassidy Bielawski, Graphics Lab Apprentice
+    * 2-D Animation by Kenneth Rooker, Graphics Lab Lead
 * Other code, copyright Alan Palazzolo and contributors.  Licensed under MIT license.
