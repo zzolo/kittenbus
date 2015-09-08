@@ -50,20 +50,26 @@ body  input[type="search"] {
 
 .panel-1 .panel-inner,
 .panel-2 .panel-inner {
-  border-right: 3px solid black;
+  /* border-right: 3px solid black; */
 }
+
+.panel-2 .panel-inner.frame-1 { background-color: #102050; }
+.panel-2 .panel-inner.frame-2 { background-color: #60B040; }
+.panel-2 .panel-inner.frame-3 { background-color: #78BCE4; }
+.panel-2 .panel-inner.frame-4 { background-color: #606060; }
+.panel-2 .panel-inner.frame-5 { background-color: red; }
+.panel-2 .panel-inner.frame-6 { background-color: #FFA020; }
 
 .panel-bottom {
   position: absolute;
   bottom: 0;
   width: 100%;
   font-size: 1.5em;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em 1.25em 1em;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.6);
   color: #FFFFFF;
   line-height: 1.25em;
-  border-top: 3px solid black;
 }
 
 .new-bus .panel-bottom {
@@ -95,7 +101,7 @@ body  input[type="search"] {
 .panel-middle {
   position: relative;
   top: 50%;
-  transform: translateY(-60%);
+  transform: translateY(-57%);
   width: 100%;
 }
 
@@ -103,6 +109,34 @@ body  input[type="search"] {
   max-width: 100%;
   max-height: 100%;
   margin: 0 auto;
+}
+
+.other-buses {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 0.85em;
+  padding: 0.5em 1em;
+}
+
+.other-buses .label {
+  color: #BDBDBD;
+}
+
+.credits {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  color: #BDBDBD;
+  text-align: center;
+  font-size: 0.5em;
+  padding: 1em 0.5em 0.5em 0.5em;
 }
 
 /* Kitten bus (map) */

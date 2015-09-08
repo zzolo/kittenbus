@@ -9,7 +9,7 @@ $(document).ready(function() {
   var Catimations = Backbone.View.extend({
     // Container and other props
     el: '.catimations',
-    animations: ['bubble', 'puzzle', 'face'],
+    animations: ['bubble', 'face', 'puzzle'],
     assignedPanels: { 0: undefined, 1: undefined, 2: undefined },
 
     // Start
@@ -23,7 +23,8 @@ $(document).ready(function() {
 
       // Get some template
       this.templates = {
-        panel: _.template($('#catimation-panel').html())
+        panel: _.template($('#catimation-panel').html()),
+        buses: _.template($('#catimation-other-buses').html())
       };
 
       // Create new furball
@@ -58,7 +59,7 @@ $(document).ready(function() {
 
       // Trim the data, as busID's are not actually unique and look to be
       // repeated each day
-      data.data = _.first(data.data, 8);
+      data.data = _.first(data.data, 10);
 
       // Remove any panels that are not available anymore
       _.each(_this.assignedPanels, function(p, pi) {
@@ -91,6 +92,14 @@ $(document).ready(function() {
             }
             return (p === undefined);
           });
+        }
+      });
+
+      // Get the rest of the buses coming
+      this.otherBuses = [];
+      _.each(data.data, function(d) {
+        if (!_.findWhere(_this.assignedPanels, { busID: d.busID })) {
+          _this.otherBuses.push(_.clone(d));
         }
       });
 
@@ -159,6 +168,9 @@ $(document).ready(function() {
           }
         }
       });
+
+      // Render other buses
+      this.$('.other-buses').html(this.templates.buses({ d: this.otherBuses }));
     },
 
     // Set a message

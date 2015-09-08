@@ -27,11 +27,20 @@
         <div class="panel panel-2"></div>
         <div class="panel panel-3"></div>
       </div>
+
+      <div class="other-buses"></div>
+
+      <div class="credits">
+        "Face" sequence by Yupha Chang, Senior Graphics Lab Apprentice &nbsp;|&nbsp;
+        "Puzzle" sequence by King Thao, Graphics Lab Apprentice &nbsp;|&nbsp;
+        "Bubble Gum" sequence by Cassidy Bielawski, Graphics Lab Apprentice &nbsp;|&nbsp;
+        2-D Animation by Kenneth Rooker, Graphics Lab Lead
+      </div>
     </div>
 
     <!-- Templates -->
     <script type="text/template" id="catimation-panel">
-      <div class="panel-inner <%= (d.newBus) ? 'new-bus' : '' %> <%= (d.frameChange) ? 'new-frame' : '' %>">
+      <div class="panel-inner frame-<%= d.frame %> <%= (d.newBus) ? 'new-bus' : '' %> <%= (d.frameChange) ? 'new-frame' : '' %>">
         <div class="panel-middle">
           <img src="<%= d.frameImage %>">
         </div>
@@ -48,6 +57,15 @@
         </div>
       </div>
     </script>
+
+    <script type="text/template" id="catimation-other-buses">
+      <span class="label">Other buses:</span>
+      <% _.each(d, function(bus, bi) { %>
+        Bus <%= bus.routeID %> <%= (bus.minutes <= 2) ? 'Due' : 'in ' + bus.minutes + ' min' %>
+        <% if (bi + 1 != d.length) { %>&nbsp;|&nbsp;<% } %>
+      <% }) %>
+    </script>
+
 
 
     <!-- Container for kittenbus (map view) -->
